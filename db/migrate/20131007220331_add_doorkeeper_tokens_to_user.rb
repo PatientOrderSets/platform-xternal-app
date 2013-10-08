@@ -1,5 +1,6 @@
 class AddDoorkeeperTokensToUser < ActiveRecord::Migration
   def change
+    add_column :users, :doorkeeper_request_token, :string
     add_column :users, :doorkeeper_access_token, :string
     add_column :users, :doorkeeper_refresh_token, :string
   end

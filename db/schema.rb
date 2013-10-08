@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20131007220331) do
 
   create_table "users", force: true do |t|
     t.string   "email",                    default: "", null: false
+    t.string   "encrypted_password",       default: "", null: false
     t.string   "first_name",               default: "", null: false
     t.string   "last_name",                default: "", null: false
     t.string   "upn",                      default: "", null: false
@@ -25,6 +26,7 @@ ActiveRecord::Schema.define(version: 20131007220331) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "doorkeeper_request_token"
     t.string   "doorkeeper_access_token"
     t.string   "doorkeeper_refresh_token"
   end
