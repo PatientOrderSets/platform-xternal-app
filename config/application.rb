@@ -14,6 +14,10 @@ module PlatformXternalApp
 
     config.autoload_paths += %W(#{config.root}/lib)
 
+    # Important to have because it's a security feature the prevents 'clickjacking' but Chrome doesn't seem to
+    # respect Allow-from as a directive but because it's there it allows the iframe to load
+    config.action_dispatch.default_headers['X-Frame-Options'] = "Allow-from dev.pos"
+
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'

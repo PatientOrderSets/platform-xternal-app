@@ -2,10 +2,10 @@ PlatformXternalApp::Application.routes.draw do
   devise_for :users, controllers: {sessions: 'sessions'}
 
   devise_scope :user do
-    post 'access/jwt' => 'sessions#create'
+    post 'access/jwt' => 'sessions#jwt'
   end
 
-  get 'home/index'
+  get 'home/index' => 'home#index', as: :index_home
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -13,13 +13,16 @@ class ApplicationController < ActionController::Base
   end
 
   def doorkeeper_access_token
+    logger.info current_user.inspect
     if current_user
       if current_user.doorkeeper_access_token
-        @access ||= OAuth2::AccessToken(doorkeeper_oauth_client, current_user.doorkeeper_access_token,
+        @access ||= OAuth2::AccessToken.new(doorkeeper_oauth_client, current_user.doorkeeper_access_token,
                                         refresh_token: current_user.doorkeeper_refresh_token)
       else
         @access ||= doorkeeper_oauth_client.auth_code.get_token(current_user.doorkeeper_request_token,
                                                                 redirect_uri: 'http://xternal.aw.dev.pos:3001/access/jwt')
+        current_user.update_attributes! doorkeeper_access_token: @access.token, doorkeeper_refresh_token: @access.refresh_token
+        @access
       end
     end
   end
@@ -38,6 +41,10 @@ class ApplicationController < ActionController::Base
         user.email = jwt_token['email']
         user.doorkeeper_request_token = jwt_token['oauth_request_token']
       end
+
+      user.save if user.changed?
+
+      logger.info("User info is: #{user.inspect}")
 
       sign_in user
     end
