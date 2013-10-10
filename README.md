@@ -23,7 +23,7 @@ logic kicks in. To do this we apply a `before_filter` before the application's D
 the sample application defines the authenticate call, thus the resulting `ApplicationController` should look like the
 following:
 
-~~~~ ruby
+```ruby
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user_from_ep_platform
   before_filter :authenticate_user!
 
-  > ... other things go here ...
+  # ... other things go here ...
 
   def authenticate_user_from_ep_platform
     if params[:jwt]
@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
     end
   end
 end
-~~~~
+```
 
 How this works is that it will sign the user in and when the `before_filter :authenticate_user!` executes the application
 already knows the user has been signed in and just lets the request go through.
